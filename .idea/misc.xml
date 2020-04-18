@@ -10,6 +10,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/tensquare_recruit/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -18,4 +19,5 @@
       </set>
     </option>
   </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_13" default="false" project-jdk-name="1.8.0_181" project-jdk-type="JavaSDK" />
 </project>

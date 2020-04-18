@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/com.tensquare.iml" filepath="$PROJECT_DIR$/.idea/com.tensquare.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensquare_common/tensquare_common.iml" filepath="$PROJECT_DIR$/tensquare_common/tensquare_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tensquare_recruit/tensquare_recruit.iml" filepath="$PROJECT_DIR$/tensquare_recruit/tensquare_recruit.iml" />
       <module fileurl="file://$PROJECT_DIR$/trnsquare_base/trnsquare_base.iml" filepath="$PROJECT_DIR$/trnsquare_base/trnsquare_base.iml" />
     </modules>
   </component>
