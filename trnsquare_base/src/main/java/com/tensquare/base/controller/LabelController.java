@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @program: com.tensquare
@@ -58,6 +60,12 @@ public class LabelController {
         label.setId(labelId);
         labelService.update(label);
         return new Result(true, StatusCode.OK, "修改成功");
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public Result findSearch(@RequestBody Label label) {
+        List<Label> resultData=labelService.findSearch(label);
+        return  new Result(true,StatusCode.OK,"查询成功",resultData);
     }
 
 }
