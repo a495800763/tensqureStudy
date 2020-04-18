@@ -3,6 +3,9 @@ package com.tensquare.base.service;
 import com.tensquare.base.dao.LabelDao;
 import com.tensquare.base.pojo.Label;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
@@ -86,5 +89,42 @@ public class LabelService {
         });
 
         return result;
+    }
+
+    public Page<Label> pageQuery(Label label, int page, int size) {
+       //封装一个分页对象
+        Pageable pageable = PageRequest.of(page-1,size);
+
+
+        return  labelDao.findAll(new Specification<Label>() {
+             /**
+              *
+              * @param root 跟对象， 也就是要把条件封装到那个对象中。where 类名=label.getid()
+              * @param criteriaQuery 封装的都是查询关键字 groupby orderby 之类的
+              * @param criteriaBuilder 用来封装条件对象的
+              * @return 返回null 表示不需要任何条件
+              */
+             @Override
+             public Predicate toPredicate(Root<Label> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+
+                 ArrayList<Predicate> list = new ArrayList<>();
+
+
+                 if (label.getLabelname() != null && !"".equals(label.getLabelname())) {
+                     Predicate predicate = criteriaBuilder.like(root.get("labelname").as(String.class), "%" + label.getLabelname() + "%");// where labelname like '%{label.getlabelName}%'
+                     list.add(predicate);
+                 }
+                 if (label.getState() != null && !"".equals(label.getState())) {
+                     Predicate predicate = criteriaBuilder.equal(root.get("state").as(String.class), label.getState());
+                     list.add(predicate);
+                 }
+
+                 // new 一个数组 作为最终返回值的条件
+                 Predicate[] parr = new Predicate[list.size()];
+                 parr = list.toArray(parr);
+                 return criteriaBuilder.and(parr);
+             }
+         },pageable);
     }
 }
