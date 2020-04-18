@@ -2,7 +2,7 @@
 [十次方社交项目](https://www.bilibili.com/video/BV1n4411S7Rv)
 
 
-##技术栈  
+## 技术栈  
 * springboot
 
 
