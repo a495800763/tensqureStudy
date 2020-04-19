@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
 
@@ -33,6 +34,9 @@ public class ArticleService {
 	
 	@Autowired
 	private IdWorker idWorker;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 
 	/**
@@ -92,7 +96,19 @@ public class ArticleService {
 	 * @return
 	 */
 	public Article findById(String id) {
-		return articleDao.findById(id).get();
+
+		String key = "article_"+id;
+		//先从缓存中查询 是否有当前id 对象的缓存
+		Article article = (Article)redisTemplate.opsForValue().get(key);
+		if(article ==null)
+		{
+			// 从数据库中查询
+			article=articleDao.findById(id).get();
+			//存入redis缓存中
+			 redisTemplate.opsForValue().set(key,article);
+
+		}
+		return article;
 	}
 
 	/**
