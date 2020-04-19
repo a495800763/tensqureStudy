@@ -29,8 +29,33 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
-	
-	
+
+
+	/**
+	 * 文章审核
+	 * @param articleId
+	 * @return
+	 */
+	@RequestMapping(value = "/examine/{articleId}",method = RequestMethod.PUT)
+	public Result examine (@PathVariable String articleId)
+	{
+		articleService.updateState(articleId);
+		return new Result(true,StatusCode.OK,"审核成功");
+	}
+
+
+	/**
+	 * 点赞文章
+	 * @param articleId
+	 * @return
+	 */
+	@RequestMapping(value = "/thumbup/{articleId}",method = RequestMethod.PUT)
+	public Result thumbup (@PathVariable String articleId)
+	{
+		articleService.addThumbup(articleId);
+		return new Result(true,StatusCode.OK,"点赞成功");
+	}
+
 	/**
 	 * 查询全部数据
 	 * @return
