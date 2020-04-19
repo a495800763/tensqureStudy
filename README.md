@@ -4,8 +4,12 @@
 
 ## 技术栈  
 * springboot
+* spring-data-redis
+* JPA
+* spring-cache
 
 
 ## 学习进度  
-* 2020-04-17:  P9 END  
-* 2020-07-18:  P20 END
+* 2020-04-17:  P9  END  
+* 2020-04-18:  P20 END  
+* 2020-04-19:  p33 END
