@@ -17,16 +17,24 @@ public class Enterprise implements Serializable{
 	private String id;//ID
 
 
-	
-	private String name;//企业名称
-	private String summary;//企业简介
-	private String address;//企业地址
-	private String labels;//标签列表
-	private String coordinate;//坐标
-	private String ishot;//是否热门
-	private String logo;//LOGO
-	private Integer jobcount;//职位数
-	private String url;//URL
+	//企业名称
+	private String name;
+	//企业简介
+	private String summary;
+	//企业地址
+	private String address;
+	//标签列表
+	private String labels;
+	//坐标
+	private String coordinate;
+	//是否热门 0 非热门 1 热门
+	private String ishot;
+	//LOGO
+	private String logo;
+	//职位数
+	private Integer jobcount;
+	//URL
+	private String url;
 
 	
 	public String getId() {		

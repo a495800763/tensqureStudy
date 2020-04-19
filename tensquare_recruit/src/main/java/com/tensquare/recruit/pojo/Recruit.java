@@ -17,20 +17,32 @@ public class Recruit implements Serializable{
 	private String id;//ID
 
 
-	
-	private String jobname;//职位名称
-	private String salary;//薪资范围
-	private String condition;//经验要求
-	private String education;//学历要求
-	private String type;//任职方式
-	private String address;//办公地址
-	private String eid;//企业ID
-	private java.util.Date createtime;//创建日期
-	private String state;//状态
-	private String url;//网址
-	private String label;//标签
-	private String content1;//职位描述
-	private String content2;//职位要求
+	//职位名称
+	private String jobname;
+	//薪资范围
+	private String salary;
+	//经验要求
+	private String condition;
+	//学历要求
+	private String education;
+	//任职方式
+	private String type;
+	//办公地址
+	private String address;
+	//企业ID
+	private String eid;
+	//创建日期
+	private java.util.Date createtime;
+	//状态 0 关闭 1开启 2 推荐
+	private String state;
+	//网址
+	private String url;
+	//标签
+	private String label;
+	//职位描述
+	private String content1;
+	//职位要求
+	private String content2;
 
 	
 	public String getId() {		
