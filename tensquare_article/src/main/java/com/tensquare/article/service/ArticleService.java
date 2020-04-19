@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 服务层
@@ -104,8 +105,8 @@ public class ArticleService {
 		{
 			// 从数据库中查询
 			article=articleDao.findById(id).get();
-			//存入redis缓存中
-			 redisTemplate.opsForValue().set(key,article);
+			//存入redis缓存中,设置10秒过期时间
+			redisTemplate.opsForValue().set(key,article,10, TimeUnit.SECONDS);
 
 		}
 		return article;
@@ -116,7 +117,7 @@ public class ArticleService {
 	 * @param article
 	 */
 	public void add(Article article) {
-		article.setId( idWorker.nextId()+"" );
+		article.setId( idWorker.nextId()+"");
 		articleDao.save(article);
 	}
 
@@ -125,6 +126,9 @@ public class ArticleService {
 	 * @param article
 	 */
 	public void update(Article article) {
+
+		//从redis 中删除旧数据的缓存
+		redisTemplate.delete("article_"+article.getId());
 		articleDao.save(article);
 	}
 
@@ -133,6 +137,9 @@ public class ArticleService {
 	 * @param id
 	 */
 	public void deleteById(String id) {
+
+		//从redis 中删除旧数据的缓存
+		redisTemplate.delete("article_"+id);
 		articleDao.deleteById(id);
 	}
 
@@ -196,7 +203,7 @@ public class ArticleService {
                 if (searchMap.get("type")!=null && !"".equals(searchMap.get("type"))) {
                 	predicateList.add(cb.like(root.get("type").as(String.class), "%"+(String)searchMap.get("type")+"%"));
                 }
-				
+
 				return cb.and( predicateList.toArray(new Predicate[predicateList.size()]));
 
 			}
