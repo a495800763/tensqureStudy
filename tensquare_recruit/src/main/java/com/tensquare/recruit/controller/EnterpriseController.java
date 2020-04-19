@@ -33,7 +33,10 @@ public class EnterpriseController {
     @Autowired
     private EnterpriseService enterpriseService;
 
-
+    /**
+     * 热门企业
+     * @return
+     */
     @RequestMapping(value = "/search/hotlist", method = RequestMethod.GET)
     public Result hotList() {
 

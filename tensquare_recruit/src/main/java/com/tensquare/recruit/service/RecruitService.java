@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
+import com.tensquare.recruit.myenum.RecommentRecruitEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +39,19 @@ public class RecruitService {
 	
 	@Autowired
 	private IdWorker idWorker;
+
+
+
+	public List<Recruit> recommend(){
+		List<Recruit> result = recruitDao.findTop6ByStateNotOrderByCreatetimeDesc(RecommentRecruitEnum.IS_RECOMMENT_RECRUIT.getCodeStr());
+		return result;
+	}
+
+	public List<Recruit> newList ()
+	{
+		List<Recruit> result = recruitDao.findTop6ByStateOrderByCreatetime(RecommentRecruitEnum.IS_RECOMMENT_RECRUIT.getCodeStr());
+		return result;
+	}
 
 	/**
 	 * 查询全部列表
