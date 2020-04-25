@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import util.IdWorker;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class SpitService {
     @Autowired
     private IdWorker idWorker;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     public List<Spit> findAll() {
@@ -41,6 +43,22 @@ public class SpitService {
 
     public void save(Spit spit) {
         spit.set_id(idWorker.nextId() + "");
+        spit.setPublishtime(new Date());
+        spit.setVisits(DEFAULT_COUNT);
+        spit.setShare(DEFAULT_COUNT);
+        spit.setThumbup(DEFAULT_COUNT);
+        spit.setComment(DEFAULT_COUNT);
+        spit.setState("1");
+
+        if (spit.getParentid() != null && !"".equals(spit.getParentid())) {
+            // 如果存在上级id 评论
+            Query query = new Query();
+            query.addCriteria(Criteria.where("_id").is(spit.getParentid()));
+            Update update = new Update();
+            update.inc("comment", 1);
+            mongoTemplate.updateFirst(query, update, "spit");
+        }
+
         spitDao.save(spit);
     }
 
@@ -68,7 +86,9 @@ public class SpitService {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(spitId));
         Update update = new Update();
-        update.inc("thumbup",1);
-        mongoTemplate.updateFirst(query, update,"spit");
+        update.inc("thumbup", 1);
+        mongoTemplate.updateFirst(query, update, "spit");
     }
+
+    private static final  Integer DEFAULT_COUNT = 0;
 }
